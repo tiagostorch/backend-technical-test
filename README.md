@@ -76,3 +76,33 @@ Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
 
 - **ProjectModule**: Gerencia projetos.
 - **ActivityModule**: Gerencia atividades dentro dos projetos.
+
+## Testes Unitários
+
+Os testes unitários foram implementados para garantir que as operações básicas de CRUD estão funcionando corretamente e que os relacionamentos entre as entidades são mantidos. O framework de testes utilizado é o Jest.
+
+### Executar Testes
+
+Para executar os testes, use o seguinte comando:
+
+```bash
+npm run test
+```
+
+### Testes Incluídos
+
+Os seguintes módulos foram testados:
+
+- **ProjectModule**:
+  - Criação de projetos
+  - Listagem de todos os projetos
+  - Busca de projeto por ID
+  - Atualização de projeto
+  - Exclusão de projeto
+
+- **ActivityModule**:
+  - Criação de atividades
+  - Listagem de todas as atividades
+  - Busca de atividade por ID
+  - Atualização de atividade
+  - Exclusão de atividade
