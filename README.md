@@ -28,7 +28,7 @@ Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/tiagostorch/backend-technical-test
    cd seu-repositorio
    ```
 
