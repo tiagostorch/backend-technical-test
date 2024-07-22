@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Activity } from './activity.entity';
+import { Project } from '../project/project.entity';
 
 @Injectable()
 export class ActivityService {
   constructor(
     @InjectRepository(Activity)
     private activityRepository: Repository<Activity>,
+    @InjectRepository(Project)
+    private projectRepository: Repository<Project>,
   ) {}
 
   findAll(): Promise<Activity[]> {
@@ -21,7 +24,11 @@ export class ActivityService {
     });
   }
 
-  async create(activity: Activity): Promise<Activity> {
+  async create(activity: Activity, projectId: number): Promise<Activity> {
+    const project = await this.projectRepository.findOne({
+      where: { id: projectId },
+    });
+    activity.project = project;
     return this.activityRepository.save(activity);
   }
 

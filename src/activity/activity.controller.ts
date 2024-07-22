@@ -52,11 +52,17 @@ export class ActivityController {
   @ApiResponse({
     status: 201,
     description: 'The created activity',
-    type: Activity,
+    type: ListActivityDto,
   })
-  create(@Body() createActivityDto: CreateActivityDto): Promise<Activity> {
+  async create(
+    @Body() createActivityDto: CreateActivityDto,
+  ): Promise<ListActivityDto> {
     const activity = plainToClass(Activity, createActivityDto);
-    return this.activityService.create(activity);
+    const createdActivity = await this.activityService.create(
+      activity,
+      createActivityDto.projectId,
+    );
+    return plainToClass(ListActivityDto, createdActivity);
   }
 
   @Put(':id')
@@ -65,15 +71,16 @@ export class ActivityController {
   @ApiResponse({
     status: 200,
     description: 'The updated activity',
-    type: Activity,
+    type: ListActivityDto,
   })
   async update(
     @Param('id') id: number,
     @Body() updateActivityDto: UpdateActivityDto,
-  ): Promise<Activity> {
+  ): Promise<ListActivityDto> {
     const activity = await this.activityService.findOne(id);
     Object.assign(activity, updateActivityDto);
-    return this.activityService.update(id, activity);
+    const updatedActivity = await this.activityService.update(id, activity);
+    return plainToClass(ListActivityDto, updatedActivity);
   }
 
   @Delete(':id')

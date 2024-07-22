@@ -50,11 +50,14 @@ export class ProjectController {
   @ApiResponse({
     status: 201,
     description: 'The created project',
-    type: Project,
+    type: ListProjectDto,
   })
-  create(@Body() createProjectDto: CreateProjectDto): Promise<Project> {
+  async create(
+    @Body() createProjectDto: CreateProjectDto,
+  ): Promise<ListProjectDto> {
     const project = plainToClass(Project, createProjectDto);
-    return this.projectService.create(project);
+    const createdProject = await this.projectService.create(project);
+    return plainToClass(ListProjectDto, createdProject);
   }
 
   @Put(':id')
@@ -63,15 +66,16 @@ export class ProjectController {
   @ApiResponse({
     status: 200,
     description: 'The updated project',
-    type: Project,
+    type: ListProjectDto,
   })
   async update(
     @Param('id') id: number,
     @Body() updateProjectDto: UpdateProjectDto,
-  ): Promise<Project> {
+  ): Promise<ListProjectDto> {
     const project = await this.projectService.findOne(id);
     Object.assign(project, updateProjectDto);
-    return this.projectService.update(id, project);
+    const updatedProject = await this.projectService.update(id, project);
+    return plainToClass(ListProjectDto, updatedProject);
   }
 
   @Delete(':id')
